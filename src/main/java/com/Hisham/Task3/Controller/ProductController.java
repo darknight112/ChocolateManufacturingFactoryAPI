@@ -30,6 +30,11 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
+    @RequestMapping("api/products/delete/{productId}")
+    public void deleteProduct (@PathVariable Long productId) {
+        productService.deleteProductById(productId);
+    }
+
     public void createProduct(GetProductRequestObject productRequestObject) {
 
         Product product = new Product();
