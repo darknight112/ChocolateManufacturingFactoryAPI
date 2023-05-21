@@ -20,6 +20,7 @@ public class Order extends BaseEntity{
     Product product;
 
     int quantity;
+    String shipping_address;
 
 
 }
