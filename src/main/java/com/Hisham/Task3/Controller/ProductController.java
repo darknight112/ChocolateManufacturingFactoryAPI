@@ -5,6 +5,7 @@ import com.Hisham.Task3.RequestObject.GetProductRequestObject;
 import com.Hisham.Task3.ResponseObject.GetProductResponse;
 import com.Hisham.Task3.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -30,10 +31,21 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
+    @PutMapping("/api/products/{productId}")
+    public ResponseEntity<GetProductResponse> updateProduct(@PathVariable Long productId, @RequestBody GetProductRequestObject updatedProduct) {
+        GetProductResponse response = productService.updateProduct(productId, updatedProduct);
+        if (response != null) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @RequestMapping("api/products/delete/{productId}")
     public void deleteProduct (@PathVariable Long productId) {
         productService.deleteProductById(productId);
     }
+
 
     public void createProduct(GetProductRequestObject productRequestObject) {
 
