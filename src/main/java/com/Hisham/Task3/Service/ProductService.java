@@ -7,6 +7,7 @@ import com.Hisham.Task3.ResponseObject.GetProductResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,7 @@ public class ProductService {
             product.setPrice(updatedProduct.getPrice());
             product.setIngredients("NOT IMPORTANT");
             product.setQuantity(updatedProduct.getQuantity());
+            product.setUpdatedDate(new Date());
             productRepository.save(product);
             return getProductById(productId);
         }
