@@ -15,9 +15,9 @@ public class Order extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
-    @JoinColumn(name = "Product ID", referencedColumnName = "id")
-    @OneToOne(cascade = CascadeType.ALL)
-    Product product;
+//    @JoinColumn(name = "Product ID", referencedColumnName = "id")
+//    @OneToOne(cascade = CascadeType.ALL)
+//    Product product;
 
     int quantity;
     String shipping_address;

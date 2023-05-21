@@ -12,5 +12,4 @@ import lombok.Setter;
 public class GetOrderRequestObject {
     Long productId;
     int quantity;
-    String shipping_address;
 }

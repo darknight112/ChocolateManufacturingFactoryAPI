@@ -6,7 +6,7 @@ cd C:\Users\Lenovo\Desktop\Task-3  # Replace with the path to your repository
 git add .
 
 # Commit the changes
-git commit -m "now we can get the info of all products by using get product api api/products, and we can get the info of each product by using their id api/product/(productId)" --allow-empty
+git commit -m "add service and controller to Order now we can get data and create new orders from api" --allow-empty
 
 # Push the changes to GitHub
 git push
