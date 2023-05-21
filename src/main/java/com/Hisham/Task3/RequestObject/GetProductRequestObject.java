@@ -13,5 +13,4 @@ public class GetProductRequestObject {
     String name;
     Double price;
     int quantity;
-    String ingredients;
 }
