@@ -6,7 +6,7 @@ cd C:\Users\Lenovo\Desktop\Task-3  # Replace with the path to your repository
 git add .
 
 # Commit the changes
-git commit -m "Auto update" --allow-empty
+git commit -m "Create service for product, RequestObject classes and ResponseObject classes" --allow-empty
 
 # Push the changes to GitHub
 git push
