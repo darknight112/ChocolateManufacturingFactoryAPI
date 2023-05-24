@@ -52,11 +52,13 @@ public class OrderController {
                 product.setIngredients(productResponse.getIngredients());
                 product.setQuantity(productResponse.getQuantity());
                 order.setProduct(product);
+                Double total = orderRequest.getQuantity()*productResponse.getPrice();
 
                 order.setQuantity(orderedQuantity);
                 orderService.saveOrder(order);
 
-                return ResponseEntity.ok("Order placed successfully");
+                return ResponseEntity.ok("Order placed successfully" +
+                        " Total amount:"+ total );
             } else {
                 return ResponseEntity.badRequest().body("Insufficient quantity in inventory");
             }
