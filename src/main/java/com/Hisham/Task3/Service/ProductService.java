@@ -40,10 +40,9 @@ public class ProductService {
 
 
     public GetProductResponse getProductById(Long productId) {
-        Optional<Product> optionalProduct =  productRepository.findById(productId);
-        if(!optionalProduct.isEmpty())
-        {
-            Product product =  optionalProduct.get();
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
             GetProductResponse productResponse = new GetProductResponse();
             productResponse.setName(product.getName());
             productResponse.setPrice(product.getPrice());

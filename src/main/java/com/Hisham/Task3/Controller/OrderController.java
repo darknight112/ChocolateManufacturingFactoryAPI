@@ -7,7 +7,9 @@ import com.Hisham.Task3.RequestObject.GetProductRequestObject;
 import com.Hisham.Task3.ResponseObject.GetOrderResponse;
 import com.Hisham.Task3.ResponseObject.GetProductResponse;
 import com.Hisham.Task3.Service.OrderService;
+import com.Hisham.Task3.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -18,10 +20,57 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-    @PostMapping("api/orders")
-    public void saveOrder (@RequestBody GetOrderRequestObject orderRequestObject) {
-        createOrder(orderRequestObject);
+    @Autowired
+    ProductService productService;
+
+    @PostMapping("api/create_order")
+    public ResponseEntity<String> placeOrder(@RequestBody GetOrderRequestObject orderRequest) {
+        long productId = orderRequest.getProductId();
+        int orderedQuantity = orderRequest.getQuantity();
+
+        // Retrieve the product from the database
+        GetProductResponse productResponse = productService.getProductById(productId);
+
+        if (productResponse != null) {
+            // Check if there is enough quantity in inventory
+            if (productResponse.getQuantity() >= orderedQuantity) {
+                // Update the inventory quantity
+                int updatedQuantity = productResponse.getQuantity() - orderedQuantity;
+                productService.updateProduct(productId, new GetProductRequestObject(
+                        productResponse.getName(),
+                        productResponse.getPrice(),
+                        updatedQuantity
+                ));
+
+                // Create the order
+                Order order = new Order();
+
+                // Set the associated product
+                Product product = new Product();
+                product.setName(productResponse.getName());
+                product.setPrice(productResponse.getPrice());
+                product.setIngredients(productResponse.getIngredients());
+                product.setQuantity(productResponse.getQuantity());
+                order.setProduct(product);
+
+                order.setQuantity(orderedQuantity);
+                orderService.saveOrder(order);
+
+                return ResponseEntity.ok("Order placed successfully");
+            } else {
+                return ResponseEntity.badRequest().body("Insufficient quantity in inventory");
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
+
+
+//    @PostMapping("api/orders")
+//    public void saveOrder (@RequestBody GetOrderRequestObject orderRequestObject) {
+//        createOrder(orderRequestObject);
+//    }
 
     @GetMapping("api/orders")
     public List<Order> getOrder () {
